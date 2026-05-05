@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alan 錢威綸 - iOS Senior Engineer 面試準備指南</title>
+    <style>
+        :root {
+            --primary-color: #007AFF; /* iOS Blue */
+            --bg-color: #F2F2F7; /* iOS System Gray 6 */
+            --card-bg: #FFFFFF;
+            --text-main: #1C1C1E;
+            --text-muted: #8E8E93;
+            --success-color: #34C759;
+            --warning-color: #FF9500;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin-top: 0.8rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: -2rem auto 2rem auto; /* Overlap with header */
+            padding: 0 1.5rem;
+            position: relative;
+        }
+
+        .topic-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+
+        .topic-card h2 {
+            margin-top: 0;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            border-bottom: 1px solid #E5E5EA;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tag-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #E5F1FF;
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tag.tech {
+            background-color: #E8F8F5;
+            color: #009688;
+        }
+
+        .star-section {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        /* Timeline style for STAR */
+        .star-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            bottom: -1rem;
+            width: 3px;
+            background-color: #E5E5EA;
+            border-radius: 2px;
+        }
+        
+        .topic-card .star-section:last-child::before {
+            display: none;
+        }
+
+        .star-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .star-title::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            width: 11px;
+            height: 11px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .highlight {
+            background-color: #FFFCDF;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #8C6B00;
+        }
+
+        .code-block {
+            background-color: #F8F8F8;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #333;
+            border: 1px solid #E5E5EA;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem 1rem 3rem 1rem;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 0 1rem;
+                margin-top: -1.5rem;
+            }
+            .topic-card {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+            .topic-card h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Senior iOS Engineer 面試準備庫</h1>
+        <p>涵蓋四大核心情境 (STAR 原則) 與 iGaming 產業痛點破解</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 💡 主題一 -->
+        <article class="topic-card">
+            <h2>💬 主題一：意見分歧的溝通處理</h2>
+            <div class="tag-group">
+                <span class="tag">跨部門溝通</span>
+                <span class="tag tech">Apple HIG</span>
+                <span class="tag tech">UI/UX</span>
+            </div>
+            
+            <p><strong>面試官提問：</strong>「請分享一次你與 PM 或設計師在需求或 UX 上意見不合的經驗，你最後如何解決？」</p>
+
+            <div class="star-section">
+                <span class="star-title">情境 (Situation)</span>
+                <p>在開發統一數網包裹追蹤 App 時，設計師為了追求極致的扁平化，希望將包裹清單卡片的<span class="highlight">陰影 (Drop Shadow) 與邊框完全拔除</span>，只靠輕微的背景色差來區分。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">任務 (Task)</span>
+                <p>我放進實機測試後發現，在戶外反光或深色模式下，沒有陰影的卡片會失去視覺層級，導致使用者難以辨識可點擊區域。我必須說服設計師修改，但不能讓他覺得我是技術本位在拒絕。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">行動 (Action)</span>
+                <p>我沒有直接打槍，而是將畫面 Build 到實機上讓他親自感受。接著，我帶入 <span class="highlight">Apple HIG 關於「層級深度 (Depth)」與「清晰度 (Clarity)」</span>的規範，解釋 iOS UI 需要 Z 軸概念來建立操作直覺。<br><br>為了尊重他的美學，我主動提出折衷方案：利用程式碼調出一個擴散半徑極大、但透明度極低 (Alpha 5%) 的<strong>「彌散陰影」</strong>，或者加上 0.5pt 的極細邊框。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">結果 (Result)</span>
+                <p>設計師看了實機 Demo 後非常滿意這個折衷方案。這不僅解決了辨識度問題，更建立了這個專案的標準 UI Component。這證明了用<span class="highlight">實機展示與官方 HIG 規範</span>是化解主觀美學衝突的最佳利器。</p>
+            </div>
+        </article>
+
+        <!-- 💡 主題二 -->
+        <article class="topic-card">
+            <h2>🏗 主題二：技術債與架構重構</h2>
+            <div class="tag-group">
+                <span class="tag">架構決策</span>
+                <span class="tag tech">Flutter to Native</span>
+                <span class="tag tech">MVVM</span>
+            </div>
+            
+            <p><strong>面試官提問：</strong>「請分享一次你主動推動技術重構或優化架構的經驗。」</p>
+
+            <div class="star-section">
+                <span class="star-title">情境 (Situation)</span>
+                <p>我在統一數網主導專案時，舊版 App 是用 Flutter 寫的。除了 UI 渲染偶有掉幀外，最嚴重的技術債是<span class="highlight">「SDK 依賴地獄」</span>。每年 iOS/Android 系統升級，都會導致依賴的第三方 Flutter 套件損壞，引發無法掌控的 Crash。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">任務 (Task)</span>
+                <p>為了徹底奪回 App 穩定性的控制權，並償還舊有程式碼「商業邏輯與 UI 高度耦合」的技術債，我主導了將專案<span class="highlight">從 Flutter 全面轉回 iOS 原生開發</span>的重構計畫。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">行動 (Action)</span>
+                <p>在技術轉型上，我依據模組複雜度彈性選用架構。針對最核心、狀態最複雜的「包裹追蹤功能」，我<span class="highlight">全面導入 MVVM 架構</span>，將批次 API 請求、物流狀態轉換等核心商業邏輯，全部抽離到 ViewModel 中保護起來。<br><br>同時，直接採用原生 API 捨棄跨平台 Bridge，徹底排除了套件不相容的定時炸彈。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">結果 (Result)</span>
+                <p>重構上線後，因為第三方 SDK 導致的 Crash 幾乎降到零。更重要的是，包裹追蹤的商業邏輯變得極度清晰且可測試，未來增加新物流規則時，再也不用擔心改壞 UI，大幅提升團隊開發效率與產品穩定性。</p>
+            </div>
+        </article>
+
+        <!-- 💡 主題三 -->
+        <article class="topic-card">
+            <h2>🔥 主題三：最大挫折與生產環境事故</h2>
+            <div class="tag-group">
+                <span class="tag">問題排查</span>
+                <span class="tag tech">Data Race</span>
+                <span class="tag tech">Swift Actors</span>
+            </div>
+            
+            <p><strong>面競爭提問：</strong>「你犯過或處理過最大的技術錯誤是什麼？你怎麼解決？」</p>
+
+            <div class="star-section">
+                <span class="star-title">情境 (Situation)</span>
+                <p>我們遇過一個非常棘手的線上事故：Crashlytics 偶爾會收到崩潰警報，但在本地端極難重現。追查後發現，是因為背景的 API 輪詢與使用者的 UI 操作，在同一時間對同一份資料進行了讀寫操作。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">任務 (Task)</span>
+                <p>這是一個典型的<span class="highlight">競爭條件 (Data Race)</span> 造成的 Crash。我的任務是必須在不影響整體效能的情況下，徹底根除這個多執行緒併發問題，確保資料的一致性與執行緒安全 (Thread Safety)。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">行動 (Action)</span>
+                <p>我先利用 Xcode 的 Thread Sanitizer (TSan) 成功重現問題。在評估解法時，我放棄了容易造成死結 (Deadlock) 且難以維護的傳統 Lock。<br><br>相反地，我決定<span class="highlight">導入 Swift 現代併發模型的 Actor</span> 來重構該模組。利用 Actor 自動隔離狀態的特性，在編譯期就保證了同一時間只有一個任務能存取資料。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">結果 (Result)</span>
+                <p>重構上線後，該 Data Race 造成的 Crash 徹底歸零。同時，程式碼的易讀性大幅提升，未來擴充業務邏輯時，再也不用擔心會不小心踩到多執行緒的雷。*(面對高頻率同步讀取，我也懂得搭配 @MainActor 或 Combine/AsyncStream 推播來兼顧效能)*。</p>
+            </div>
+        </article>
+
+        <!-- 💡 主題四 -->
+        <article class="topic-card">
+            <h2>🤝 主題四：Mentor 與跨端 Code Review</h2>
+            <div class="tag-group">
+                <span class="tag">團隊協作</span>
+                <span class="tag tech">CI/CD</span>
+                <span class="tag tech">SwiftLint</span>
+            </div>
+            
+            <p><strong>面試官提問：</strong>「你目前是一人開發 iOS，那你怎麼做 Code Review？如何確保程式碼品質？」</p>
+
+            <div class="star-section">
+                <span class="star-title">情境 (Situation)</span>
+                <p>雖然我目前是團隊唯一的 iOS 原生工程師，但我們有嚴格的跨端協作流程。我的 PR 必須由技術主管和 Android 工程師共同 Review 才能 Merge。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">任務 (Task)</span>
+                <p>我的任務是：第一，確保自己不會因為一人開發而產出有盲點的程式碼；第二，擔任 iOS 領域專家，在 Review 時跨越語言隔閡，確保雙平台架構一致並符合商業邏輯。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">行動 (Action)</span>
+                <p>我建立了<strong>「三道防線」</strong>的 Code Review 機制：<br>
+                1. <strong>自動化黑臉：</strong>在 CI/CD 中掛載 <span class="highlight">SwiftLint</span>，自動攔截排版與命名不合規的 PR。<br>
+                2. <strong>跨端架構對齊：</strong>與 Android 工程師 Review 時，專注討論邏輯簡化與雙平台變數命名的一致性（例如將 Actor 的概念翻譯成 Mutex）。<br>
+                3. <strong>商業邏輯把關：</strong>最後由技術主管針對 PM 需求與測試狀態進行總體確認。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">結果 (Result)</span>
+                <p>這套流程讓我不會淪為閉門造車。透過跨端協作，我的邏輯思維變得更洗鍊，且負責的 App 上線後穩定度極高，幾乎沒有雙平台行為不一致的 Bug，也證明了我具備在團隊中推動與建立標準的能力。</p>
+            </div>
+        </article>
+
+    </div>
+
+    <footer>
+        <p>Generated by Gemini CLI | 祝您面試順利，成功拿下 iGaming Offer！🚀</p>
+    </footer>
+
+</body>
+</html>
