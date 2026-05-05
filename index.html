@@ -6,17 +6,46 @@
     <title>Alan 錢威綸 - iOS Senior Engineer 面試準備指南</title>
     <style>
         :root {
+            /* Light Mode Variables */
             --primary-color: #007AFF; /* iOS Blue */
             --bg-color: #F2F2F7; /* iOS System Gray 6 */
             --card-bg: #FFFFFF;
             --text-main: #1C1C1E;
             --text-muted: #8E8E93;
-            --success-color: #34C759;
-            --warning-color: #FF9500;
+            --tag-bg: #E5F1FF;
+            --tag-tech-bg: #E8F8F5;
+            --tag-tech-text: #009688;
+            --border-color: #E5E5EA;
+            --highlight-bg: #FFFCDF;
+            --highlight-text: #8C6B00;
+            --code-bg: #F8F8F8;
+            --shadow-color: rgba(0,0,0,0.04);
+            --shadow-hover: rgba(0,0,0,0.08);
+            --header-shadow: rgba(0,0,0,0.1);
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --primary-color: #0A84FF; /* iOS Blue Dark */
+            --bg-color: #000000;
+            --card-bg: #1C1C1E;
+            --text-main: #F2F2F7;
+            --text-muted: #AEAEB2;
+            --tag-bg: #1C2C3E;
+            --tag-tech-bg: #1A3632;
+            --tag-tech-text: #48C9B0;
+            --border-color: #38383A;
+            --highlight-bg: #3A3000;
+            --highlight-text: #FFD60A;
+            --code-bg: #2C2C2E;
+            --shadow-color: rgba(0,0,0,0.5);
+            --shadow-hover: rgba(0,0,0,0.8);
+            --header-shadow: rgba(0,0,0,0.5);
         }
         
         * {
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
@@ -34,7 +63,32 @@
             color: white;
             padding: 3rem 1.5rem;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px var(--header-shadow);
+            position: relative;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         header h1 {
@@ -61,20 +115,20 @@
             border-radius: 16px;
             padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+            box-shadow: 0 8px 16px var(--shadow-color);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .topic-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 24px var(--shadow-hover);
         }
 
         .topic-card h2 {
             margin-top: 0;
             color: var(--text-main);
             font-size: 1.5rem;
-            border-bottom: 1px solid #E5E5EA;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 1rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -91,7 +145,7 @@
 
         .tag {
             display: inline-block;
-            background-color: #E5F1FF;
+            background-color: var(--tag-bg);
             color: var(--primary-color);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -100,8 +154,8 @@
         }
 
         .tag.tech {
-            background-color: #E8F8F5;
-            color: #009688;
+            background-color: var(--tag-tech-bg);
+            color: var(--tag-tech-text);
         }
 
         .star-section {
@@ -118,7 +172,7 @@
             top: 0.4rem;
             bottom: -1rem;
             width: 3px;
-            background-color: #E5E5EA;
+            background-color: var(--border-color);
             border-radius: 2px;
         }
         
@@ -143,26 +197,26 @@
             height: 11px;
             background-color: var(--primary-color);
             border-radius: 50%;
-            border: 2px solid white;
+            border: 2px solid var(--card-bg);
             box-shadow: 0 0 0 1px var(--primary-color);
         }
 
         .highlight {
-            background-color: #FFFCDF;
+            background-color: var(--highlight-bg);
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 500;
-            color: #8C6B00;
+            color: var(--highlight-text);
         }
 
         .code-block {
-            background-color: #F8F8F8;
+            background-color: var(--code-bg);
             padding: 1rem;
             border-radius: 8px;
             font-family: monospace;
             font-size: 0.9rem;
-            color: #333;
-            border: 1px solid #E5E5EA;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
             margin-top: 0.5rem;
         }
 
@@ -176,7 +230,11 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
-                padding: 2rem 1rem 3rem 1rem;
+                padding: 3.5rem 1rem 3rem 1rem;
+            }
+            .theme-toggle {
+                top: 0.8rem;
+                right: 1rem;
             }
             header h1 {
                 font-size: 1.8rem;
@@ -198,6 +256,9 @@
 <body>
 
     <header>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span> <span id="themeText">切換深色</span>
+        </button>
         <h1>Senior iOS Engineer 面試準備庫</h1>
         <p>涵蓋四大核心情境 (STAR 原則) 與 iGaming 產業痛點破解</p>
     </header>
@@ -341,5 +402,33 @@
         <p>Generated by Gemini CLI | 祝您面試順利，成功拿下 iGaming Offer！🚀</p>
     </footer>
 
+    <script>
+        // Check local storage or system preference
+        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+        
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            updateToggleButton();
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+            updateToggleButton();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            let theme = 'light-mode';
+            if (document.body.classList.contains('dark-mode')) {
+                theme = 'dark-mode';
+            }
+            localStorage.setItem('theme', theme);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
+            document.getElementById('themeText').innerText = isDark ? '切換淺色' : '切換深色';
+        }
+    </script>
 </body>
 </html>
