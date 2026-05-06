@@ -396,6 +396,65 @@
             </div>
         </article>
 
+        <!-- 💡 關卡二：系統設計 -->
+        <article class="topic-card">
+            <h2>🏗 關卡二：系統設計 (iGaming 賽事直播 App)</h2>
+            <div class="tag-group">
+                <span class="tag">System Design</span>
+                <span class="tag tech">MVVM / TCA</span>
+                <span class="tag tech">AVFoundation</span>
+                <span class="tag tech">Memory Management</span>
+            </div>
+            
+            <p><strong>面試情境：</strong>「請設計一個體育即時賽事 App，上半部是 Live 直播，下半部是高頻跳動的即時賠率。如何規劃架構與防範 OOM？」</p>
+
+            <div class="star-section">
+                <span class="star-title">1. 架構選擇 (MVC/MVVM vs TCA)</span>
+                <p>採取務實的 <span class="highlight">MVC / MVVM 混合開發</span>。對於靜態頁面使用 MVC 求快；核心賽事頁面全面導入 MVVM 解耦 UI 與商業邏輯。面對極端複雜的狀態機（如直播+賠率+結帳互相干擾），則提出 <span class="highlight">TCA (The Composable Architecture)</span> 作為未來單向資料流的進階升級方案，展現評估技術成本的 Senior 思維。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">2. 資料流與多執行緒 (Actor & @MainActor)</span>
+                <p>利用背景的 <span class="highlight">Custom Actor (如 SocketActor)</span> 接收高頻 TCP/Socket 賠率，徹底防範 Data Race。接著透過 Combine/AsyncStream 進行降頻 (Throttle)，最後由標記為 <span class="highlight">@MainActor</span> 的 ViewModel 安全且同步地驅動 UI 更新。透過編譯器自動切換執行緒，免去傳統 <code>DispatchQueue.main.async</code> 的繁瑣。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">3. 影音客製化 (AVFoundation)</span>
+                <p>捨棄笨重的 AVPlayerViewController，改用底層的 <span class="highlight">AVPlayer 搭配 AVPlayerLayer</span> 鋪在畫面最底層 (Z-Index:0)，讓 SwiftUI/UIKit 元件（跑馬燈、賠率按鈕）能自由疊加。並透過 KVO 監聽 <code>timeControlStatus</code> 來實作精準的 Buffering 動畫。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">4. 防範 OOM (雙層快取與降採樣)</span>
+                <p>除了全面改用 <code>async/await</code> 消除 Closure 帶來的 Retain Cycle 危機外，針對大量圖片湧入，實作 <span class="highlight">LRU Memory Cache (NSCache) + Disk Cache (FileManager)</span> 雙層機制。並在解碼階段導入 <span class="highlight">Downsampling (降採樣)</span>，避免大圖直接撐爆 RAM。</p>
+            </div>
+        </article>
+
+        <!-- 💡 關卡三：底層技術深掘 -->
+        <article class="topic-card">
+            <h2>🔥 關卡三：底層技術快問快答</h2>
+            <div class="tag-group">
+                <span class="tag">Deep Dive</span>
+                <span class="tag tech">ARC</span>
+                <span class="tag tech">Concurrency</span>
+                <span class="tag tech">UIKit</span>
+            </div>
+
+            <div class="star-section">
+                <span class="star-title">Q1: weak vs unowned 差異與 Retain Cycle？</span>
+                <p>兩者都不增加參考計數，用來打破循環強參照 (Retain Cycle) 防止記憶體洩漏。<code>weak</code> 是 Optional，物件釋放後安全變為 nil；<code>unowned</code> 假設對方活得比自己久，若存取已釋放物件會直接 Crash。實戰中為了極致穩定性，<span class="highlight">一律優先使用 weak</span>。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">Q2: Closure 時代 vs async/await 的 OOM 防範？</span>
+                <p>以往使用 Closure 極易漏寫 <code>[weak self]</code> 導致 View Controller 無法釋放。導入 <span class="highlight">async/await 結構化併發</span>後，非同步程式碼變為線性執行，天然消滅了複雜的 Closure 嵌套與 Retain Cycle。同時配合 @MainActor，編譯器會自動保證切回主線程，大幅降低 Crash 風險。</p>
+            </div>
+            
+            <div class="star-section">
+                <span class="star-title">Q3: setNeedsLayout vs layoutIfNeeded？</span>
+                <p><code>setNeedsLayout()</code> 是<span class="highlight">異步</span>的，只做重繪標記 (Flag)，適合批次更改屬性；<code>layoutIfNeeded()</code> 是<span class="highlight">同步</span>的，強制系統立刻計算排版並重繪。在實作 AutoLayout 動畫時，需將 <code>layoutIfNeeded()</code> 放入 <code>UIView.animate</code> 區塊中以產生順暢漸變。</p>
+            </div>
+        </article>
+
     </div>
 
     <footer>
